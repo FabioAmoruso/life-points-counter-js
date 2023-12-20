@@ -1,18 +1,12 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  /* padding: 2rem; */
   text-align: center;
 }
 
 h1 {
   font-size: 3.2em;
   margin: 30px;
-  /* line-height: 0.5; */
-}
-
-span {
-  display: table-cell;
 }
 
 input {
@@ -49,7 +43,24 @@ input {
   line-height: 1em;
 }
 
-.icons:hover {
+.operationIcons:hover {
+  cursor: pointer;
   stroke: currentColor;
   stroke-width: .3;
+}
+
+.editIcon:hover {
+  cursor: pointer;
+  stroke: currentColor;
+  stroke-width: .8;
+}
+
+.nameContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playerName {
+  margin-right: 8px;
 }

@@ -4,24 +4,70 @@ import { useState } from 'react'
 import './App.css'
 import Player from "./components/Player";
 
+const initialPlayers = [
+    {
+        id: 0,
+        name: "Player",
+        lifePoints: 8000,
+        isPlusClicked: false,
+        isMinusClicked: false
+    },
+    {
+        id: 1,
+        name: "Player",
+        lifePoints: 8000,
+        isPlusClicked: false,
+        isMinusClicked: false
+    },
+];
+
 function App() {
 
-    const players = [
-        {
-            id: 0,
-            name: "Player",
-            lifePoints: 8000,
-            isPlusClicked: false,
-            isMinusClicked: false
-        },
-        {
-            id: 1,
-            name: "Player",
-            lifePoints: 8000,
-            isPlusClicked: false,
-            isMinusClicked: false
-        },
-    ];
+    const [players, setPlayers] = useState(initialPlayers);
+
+
+    const handleNameChange = (e) => {
+        setPlayers({ ...players, name: e.target.value });
+    }
+
+    const handleLifePointsChange = (e) => {
+        setPlayers({ ...players, lifePoints: e.target.value });
+    }
+
+    const handleIsPlusClickedChange = (index) => {
+
+        const updatedPlusClick = players.map((player, i) => {
+            if (i == index) {
+                return {
+                    ...player,
+                    isPlusClicked: !player.isPlusClicked,
+                    isMinusClicked: false
+                };
+            } else {
+                return player;
+            }
+        });
+
+        setPlayers(updatedPlusClick);
+
+    }
+
+    const handleIsMinusClickedChange = (index) => {
+
+        const updatedMinusClick = players.map((player, i) => {
+            if (i == index) {
+                return {
+                    ...player,
+                    isPlusClicked: false,
+                    isMinusClicked: !player.isMinusClicked
+                };
+            } else {
+                return player;
+            }
+        });
+
+        setPlayers(updatedMinusClick);
+    }
 
     return (
         <>
@@ -30,16 +76,16 @@ function App() {
                 <p>Calculate your life points.</p>
             </div>
 
-            {players.map((player) => (
+            {players.map((player, index) => (
                 <Player
                     key={player.id}
                     playerNumber={player.id + 1}
                     lifePoints={player.lifePoints}>
                     <div className="operations">
-                        {player.isPlusClicked ? <FaCirclePlus className="icons" /> : <CiCirclePlus className="icons" />}
-                        {player.isMinusClicked ? <FaCircleMinus className="icons" /> : <CiCircleMinus className="icons" />}
-                        {player.isPlusClicked && <input type="text" />}
-                        {player.isMinusClicked && <input type="text" />}
+                        {player.isPlusClicked ? <FaCirclePlus className="operationIcons" onClick={() => { handleIsPlusClickedChange(index) }} /> : <CiCirclePlus className="operationIcons" onClick={() => { handleIsPlusClickedChange(index) }} />}
+                        {player.isMinusClicked ? <FaCircleMinus className="operationIcons" onClick={() => { handleIsMinusClickedChange(index) }} /> : <CiCircleMinus className="operationIcons" onClick={() => { handleIsMinusClickedChange(index) }} />}
+                        {player.isPlusClicked && <input type="text" autoFocus />}
+                        {player.isMinusClicked && <input type="text" autoFocus />}
                     </div>
                 </Player>
             ))}
