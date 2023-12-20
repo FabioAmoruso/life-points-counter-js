@@ -33,19 +33,9 @@ input {
   margin-bottom: 80px;
 }
 
-.card-one {
+.player {
   border: 2px solid white;
   border-radius: 5px;
-  background-color: rgba(88, 145, 255, 0.5);
-  height: 14em;
-  margin-bottom: 10px;
-  padding: 25px;
-}
-
-.card-two {
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: rgba(255, 30, 30, 0.5);
   height: 14em;
   margin-bottom: 10px;
   padding: 25px;
@@ -57,4 +47,9 @@ input {
   float: left;
   height: 1em;
   line-height: 1em;
+}
+
+.icons:hover {
+  stroke: currentColor;
+  stroke-width: .3;
 }
