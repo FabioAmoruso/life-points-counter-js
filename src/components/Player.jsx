@@ -2,7 +2,7 @@ import { FaEdit } from "react-icons/fa";
 import { useEffect, useRef, useState } from 'react'
 import { initialPlayers } from "../App";
 
-function Player({ children, playerId, playerName, playerNumber, lifePoints, updatePlayerName, updateLifePoints }) {
+function Player({ children, playerId, playerName, playerNumber, lifePoints, updatePlayerName }) {
 
     const [name, setName] = useState(`${playerName} ${playerNumber}`);
     const [isEditIconClicked, setIsEditIconClicked] = useState(false);

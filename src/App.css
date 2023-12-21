@@ -20,6 +20,7 @@ input {
   background: transparent;
   outline: 0;
   border: none;
+  font: 15px sans-serif;
   border-bottom: 1px solid white;
 }
 

@@ -24,6 +24,7 @@ export const initialPlayers = [
 function App() {
 
     const [players, setPlayers] = useState(initialPlayers);
+    const [val, setVal] = useState("");
 
     const handleIsPlusClickedChange = (index) => {
 
@@ -76,16 +77,29 @@ function App() {
         setPlayers(updatedPlayerName);
     }
 
-    const updateLifePoints = (lifePoints, index) => {
+    const updateLifePoints = (inputLifePoints, index) => {
+
+        if (typeof inputLifePoints !== 'number') {
+            inputLifePoints = parseInt(inputLifePoints);
+        }
 
         const updatedLifePoints = players.map((player, i) => {
-            if (i == index) {
+            if (i != index) {
+                return player;
+            }
+
+            if (player.isPlusClicked) {
                 return {
                     ...player,
-                    lifePoints: lifePoints
+                    lifePoints: player.lifePoints + inputLifePoints,
+                    isPlusClicked: false
                 };
             } else {
-                return player;
+                return {
+                    ...player,
+                    lifePoints: (player.lifePoints - inputLifePoints) < 0 ? 0 : player.lifePoints - inputLifePoints,
+                    isMinusClicked: false
+                };
             }
         });
 
@@ -106,13 +120,26 @@ function App() {
                     playerName={player.name}
                     playerNumber={player.id + 1}
                     lifePoints={player.lifePoints}
-                    updatePlayerName={updatePlayerName}
-                    updateLifePoints={updateLifePoints}>
+                    updatePlayerName={updatePlayerName}>
                     <div className="operations">
                         {player.isPlusClicked ? <FaCirclePlus className="operationIcons" onClick={() => { handleIsPlusClickedChange(index) }} /> : <CiCirclePlus className="operationIcons" onClick={() => { handleIsPlusClickedChange(index) }} />}
                         {player.isMinusClicked ? <FaCircleMinus className="operationIcons" onClick={() => { handleIsMinusClickedChange(index) }} /> : <CiCircleMinus className="operationIcons" onClick={() => { handleIsMinusClickedChange(index) }} />}
-                        {player.isPlusClicked && <input type="text" autoFocus />}
-                        {player.isMinusClicked && <input type="text" autoFocus />}
+                        {player.isPlusClicked &&
+                            <input
+                                type="text"
+                                value={val}
+                                maxLength={4}
+                                autoFocus
+                                onChange={e => setVal(e.target.value.replace(/[^0-9]/g, ""))}
+                                onKeyDown={(e) => { (e.key === "Enter" && e.target.value) && updateLifePoints(e.target.value, index) }} />}
+                        {player.isMinusClicked &&
+                            <input
+                                type="text"
+                                value={val}
+                                maxLength={4}
+                                autoFocus
+                                onChange={e => setVal(e.target.value.replace(/[^0-9]/g, ""))}
+                                onKeyDown={(e) => { (e.key === "Enter" && e.target.value) && updateLifePoints(e.target.value, index) }} />}
                     </div>
                 </Player>
             ))}
