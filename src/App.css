@@ -52,15 +52,27 @@ input {
 .editIcon:hover {
   cursor: pointer;
   stroke: currentColor;
-  stroke-width: .8;
+  stroke-width: 8;
 }
 
 .nameContainer {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-start;
+  padding: 3px;
+  margin-left: 15px;
+  max-height: 40px;
 }
 
 .playerName {
-  margin-right: 8px;
+  width: 4.5em;
+  margin-left: .4em;
+  margin-top: 9px;
+  background: transparent;
+  font: 20px sans-serif;
+  border-bottom: none;
+}
+
+.editPlayerName {
+  border-bottom: 1px solid white;
 }

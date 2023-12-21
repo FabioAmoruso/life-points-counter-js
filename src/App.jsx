@@ -4,7 +4,7 @@ import { useState } from 'react'
 import './App.css'
 import Player from "./components/Player";
 
-const initialPlayers = [
+export const initialPlayers = [
     {
         id: 0,
         name: "Player",
@@ -24,15 +24,6 @@ const initialPlayers = [
 function App() {
 
     const [players, setPlayers] = useState(initialPlayers);
-
-
-    const handleNameChange = (e) => {
-        setPlayers({ ...players, name: e.target.value });
-    }
-
-    const handleLifePointsChange = (e) => {
-        setPlayers({ ...players, lifePoints: e.target.value });
-    }
 
     const handleIsPlusClickedChange = (index) => {
 
@@ -69,6 +60,38 @@ function App() {
         setPlayers(updatedMinusClick);
     }
 
+    const updatePlayerName = (playerName, index) => {
+
+        const updatedPlayerName = players.map((player, i) => {
+            if (i == index) {
+                return {
+                    ...player,
+                    name: playerName
+                };
+            } else {
+                return player;
+            }
+        });
+
+        setPlayers(updatedPlayerName);
+    }
+
+    const updateLifePoints = (lifePoints, index) => {
+
+        const updatedLifePoints = players.map((player, i) => {
+            if (i == index) {
+                return {
+                    ...player,
+                    lifePoints: lifePoints
+                };
+            } else {
+                return player;
+            }
+        });
+
+        setPlayers(updatedLifePoints);
+    }
+
     return (
         <>
             <div className="header">
@@ -79,8 +102,12 @@ function App() {
             {players.map((player, index) => (
                 <Player
                     key={player.id}
+                    playerId={player.id}
+                    playerName={player.name}
                     playerNumber={player.id + 1}
-                    lifePoints={player.lifePoints}>
+                    lifePoints={player.lifePoints}
+                    updatePlayerName={updatePlayerName}
+                    updateLifePoints={updateLifePoints}>
                     <div className="operations">
                         {player.isPlusClicked ? <FaCirclePlus className="operationIcons" onClick={() => { handleIsPlusClickedChange(index) }} /> : <CiCirclePlus className="operationIcons" onClick={() => { handleIsPlusClickedChange(index) }} />}
                         {player.isMinusClicked ? <FaCircleMinus className="operationIcons" onClick={() => { handleIsMinusClickedChange(index) }} /> : <CiCircleMinus className="operationIcons" onClick={() => { handleIsMinusClickedChange(index) }} />}
