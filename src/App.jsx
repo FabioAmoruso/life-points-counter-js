@@ -29,15 +29,16 @@ function App() {
     const handleIsPlusClickedChange = (index) => {
 
         const updatedPlusClick = players.map((player, i) => {
-            if (i == index) {
-                return {
-                    ...player,
-                    isPlusClicked: !player.isPlusClicked,
-                    isMinusClicked: false
-                };
-            } else {
+
+            if (i !== index) {
                 return player;
             }
+
+            return {
+                ...player,
+                isPlusClicked: !player.isPlusClicked,
+                isMinusClicked: false
+            };
         });
 
         setPlayers(updatedPlusClick);
@@ -47,15 +48,17 @@ function App() {
     const handleIsMinusClickedChange = (index) => {
 
         const updatedMinusClick = players.map((player, i) => {
-            if (i == index) {
-                return {
-                    ...player,
-                    isPlusClicked: false,
-                    isMinusClicked: !player.isMinusClicked
-                };
-            } else {
+
+            if (i !== index) {
                 return player;
             }
+
+            return {
+                ...player,
+                isPlusClicked: false,
+                isMinusClicked: !player.isMinusClicked
+            };
+
         });
 
         setPlayers(updatedMinusClick);
@@ -64,14 +67,15 @@ function App() {
     const updatePlayerName = (playerName, index) => {
 
         const updatedPlayerName = players.map((player, i) => {
-            if (i == index) {
-                return {
-                    ...player,
-                    name: playerName
-                };
-            } else {
+
+            if (i !== index) {
                 return player;
             }
+
+            return {
+                ...player,
+                name: playerName
+            };
         });
 
         setPlayers(updatedPlayerName);
@@ -84,14 +88,15 @@ function App() {
         }
 
         const updatedLifePoints = players.map((player, i) => {
-            if (i != index) {
+
+            if (i !== index) {
                 return player;
             }
 
             if (player.isPlusClicked) {
                 return {
-                    ...player,
-                    lifePoints: player.lifePoints + inputLifePoints,
+                ...player,
+                    lifePoints: (player.lifePoints + inputLifePoints) > 99999 ? 99999 : player.lifePoints + inputLifePoints,
                     isPlusClicked: false
                 };
             } else {
@@ -104,6 +109,7 @@ function App() {
         });
 
         setPlayers(updatedLifePoints);
+        setVal("");
     }
 
     return (
@@ -131,7 +137,7 @@ function App() {
                                 maxLength={4}
                                 autoFocus
                                 onChange={e => setVal(e.target.value.replace(/[^0-9]/g, ""))}
-                                onKeyDown={(e) => { (e.key === "Enter" && e.target.value) && updateLifePoints(e.target.value, index) }} />}
+                                onKeyDown={e => { (e.key === "Enter" && e.target.value) && updateLifePoints(e.target.value, index) }} />}
                         {player.isMinusClicked &&
                             <input
                                 type="text"
@@ -139,7 +145,7 @@ function App() {
                                 maxLength={4}
                                 autoFocus
                                 onChange={e => setVal(e.target.value.replace(/[^0-9]/g, ""))}
-                                onKeyDown={(e) => { (e.key === "Enter" && e.target.value) && updateLifePoints(e.target.value, index) }} />}
+                                onKeyDown={e => { (e.key === "Enter" && e.target.value) && updateLifePoints(e.target.value, index) }} />}
                     </div>
                 </Player>
             ))}
